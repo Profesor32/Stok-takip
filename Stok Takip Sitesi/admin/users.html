@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Yönetimi - StokTakip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet"> <!-- style.css'e göreceli yol -->
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4">Kullanıcı Yönetimi</h1>
+
+        <!-- Add User Button -->
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fas fa-plus me-2"></i>Yeni Kullanıcı Ekle
+        </button>
+
+        <!-- Users Table -->
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Email</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="usersTableBody">
+                <!-- User rows will be loaded here via JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- Add User Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Yeni Kullanıcı Ekle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addUserForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Kullanıcı Adı</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                             <div class="mb-3">
+                                <label for="password" class="form-label">Şifre</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                             <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                            </div>
+                            <!-- Admin yetkilendirmesi eklenince rol seçimi eklenebilir -->
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- Edit User Modal (Placeholder) -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalLabel">Kullanıcıyı Düzenle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                         <!-- Edit form will be loaded here via JavaScript -->
+                         <p>Düzenleme formu buraya gelecek.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script> <!-- Ortak JS dosyası -->
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for admin authorization before loading
+            checkAdminAuthorization();
+            fetchUsers();
+             // Add event listener for add user form submission
+            const addUserForm = document.getElementById('addUserForm');
+            addUserForm.addEventListener('submit', handleAddUser);
+        });
+
+        async function checkAdminAuthorization() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error("Yetkilendirme token'ı bulunamadı.");
+                alert('Bu sayfayı görüntülemek için yönetici yetkiniz yok. Giriş yapın.');
+                window.location.href = '../login.html'; // Giriş sayfasına yönlendir
+                return false;
+            }
+
+            // TODO: Backend'de token'ın geçerliliğini ve kullanıcının admin olup olmadığını kontrol eden bir endpoint olabilir.
+            // Şimdilik sadece token'ın varlığını kontrol ediyoruz.
+            // Gerçek senaryoda backend'e token'ı gönderip admin yetkisini doğrulamak daha güvenlidir.
+            // Örneğin: const response = await fetch('/api/auth/check-admin', { headers: { 'Authorization': `Bearer ${token}` } });
+            // const data = await response.json(); if (!data.isAdmin) { ... redirect ... }
+
+            // Assume token existence implies potential admin access for now, backend will enforce
+            return true;
+        }
+
+        async function fetchUsers() {
+             const token = localStorage.getItem('token'); // Get JWT
+             if (!token) {
+                 console.error("Yetkilendirme token'ı bulunamadı.");
+                 // Bu durum checkAdminAuthorization tarafından zaten ele alınmış olmalı, yine de kontrol ekleyelim.
+                 return;
+             }
+
+            try {
+                const response = await fetch('/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                 // Check if response is OK (status 200-299) and not 401 or 403
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                        window.location.href = '../login.html'; // Giriş sayfasına yönlendir
+                         return;
+                    } else {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+                const data = await response.json();
+
+                if (data.success) {
+                    displayUsers(data.data);
+                } else {
+                    console.error('Kullanıcılar çekilemedi:', data.message);
+                    // Show error message to user
+                }
+            } catch (error) {
+                console.error('Kullanıcıları çekerken bir hata oluştu:', error);
+                // Show error message to user
+            }
+        }
+
+        function displayUsers(users) {
+            const usersTableBody = document.getElementById('usersTableBody');
+            usersTableBody.innerHTML = ''; // Clear existing rows
+
+            users.forEach(user => {
+                const row = `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email || '-'}</td>
+                        <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning me-2 edit-user" data-user-id="${user.id}"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-danger delete-user" data-user-id="${user.id}"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+                usersTableBody.innerHTML += row;
+            });
+
+            // Add event listeners for Edit and Delete buttons
+            document.querySelectorAll('.delete-user').forEach(button => {
+                button.addEventListener('click', handleDeleteUser);
+            });
+             // Add event listeners for Edit buttons
+            document.querySelectorAll('.edit-user').forEach(button => {
+                button.addEventListener('click', handleEditUserClick);
+            });
+        }
+
+         async function handleAddUser(event) {
+             event.preventDefault();
+
+             const form = event.target;
+             const username = form.username.value;
+             const email = form.email.value;
+             const password = form.password.value;
+             const confirmPassword = form.confirmPassword.value;
+
+             if (password !== confirmPassword) {
+                 alert('Şifreler eşleşmiyor!');
+                 form.confirmPassword.classList.add('is-invalid');
+                 return;
+             } else {
+                 form.confirmPassword.classList.remove('is-invalid');
+             }
+
+              const token = localStorage.getItem('token'); // Get JWT
+             if (!token) {
+                 console.error("Yetkilendirme token'ı bulunamadı.");
+                 // Bu durum checkAdminAuthorization tarafından zaten ele alınmış olmalı, yine de kontrol ekleyelim.
+                 return;
+             }
+
+             try {
+                 const response = await fetch('/api/users', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${token}`
+                     },
+                     body: JSON.stringify({ username, email, password })
+                 });
+
+                  // Check if response is OK (status 200-299) and not 401 or 403
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                        window.location.href = '../login.html'; // Giriş sayfasına yönlendir
+                         return;
+                    } else {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+
+                 const data = await response.json();
+
+                 if (data.success) {
+                     alert('Kullanıcı başarıyla eklendi!');
+                     // Close the modal
+                     const addUserModal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+                     addUserModal.hide();
+                     form.reset(); // Reset the form
+                     fetchUsers(); // Refresh the user list
+                 } else {
+                     console.error('Kullanıcı ekleme hatası:', data.message);
+                      alert('Kullanıcı eklenirken bir hata oluştu: ' + data.message);
+                 }
+
+             } catch (error) {
+                 console.error('Kullanıcı ekleme sırasında ağ hatası:', error);
+                 alert('Kullanıcı eklenirken bir hata oluştu.');
+             }
+         }
+
+        async function handleDeleteUser(event) {
+            const userId = event.target.closest('button').dataset.userId;
+            if (!confirm(`Kullanıcı ID ${userId} silinecek. Emin misiniz?`)) {
+                return;
+            }
+
+             const token = localStorage.getItem('token'); // Get JWT
+             if (!token) {
+                 console.error("Yetkilendirme token'ı bulunamadı.");
+                 // Bu durum checkAdminAuthorization tarafından zaten ele alınmış olmalı, yine de kontrol ekleyelim.
+                 return;
+             }
+
+            try {
+                const response = await fetch(`/api/users/${userId}`, {
+                    method: 'DELETE',
+                     headers: {
+                          'Authorization': `Bearer ${token}`
+                     }
+                });
+                 // Check if response is OK (status 200-299) and not 401 or 403
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                        window.location.href = '../login.html'; // Giriş sayfasına yönlendir
+                         return;
+                    } else {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Kullanıcı başarıyla silindi!');
+                    fetchUsers(); // Refresh the user list
+                } else {
+                    console.error('Kullanıcı silme hatası:', data.message);
+                     alert('Kullanıcı silinirken bir hata oluştu: ' + data.message);
+                }
+            } catch (error) {
+                 console.error('Kullanıcı silme sırasında ağ hatası:', error);
+                 alert('Kullanıcı silinirken bir hata oluştu.');
+            }
+        }
+
+        // Function to handle click on Edit User button
+        async function handleEditUserClick(event) {
+            const userId = event.target.closest('button').dataset.userId;
+            const token = localStorage.getItem('token');
+
+             if (!token) {
+                 console.error("Yetkilendirme token'ı bulunamadı.");
+                 alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                 window.location.href = '../login.html';
+                 return;
+             }
+
+            try {
+                // Fetch user data
+                const response = await fetch(`/api/users/${userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                 if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                        window.location.href = '../login.html';
+                         return;
+                    } else {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const user = data.data;
+                    // Populate the edit modal form
+                    const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+                    const editUserForm = document.getElementById('editUserForm');
+
+                     // Create or update the edit form dynamically
+                    if (!editUserForm) {
+                         // If form doesn't exist, create it
+                         const modalBody = document.querySelector('#editUserModal .modal-body');
+                         modalBody.innerHTML = `
+                             <form id="editUserForm" data-user-id="${user.id}">
+                                 <div class="mb-3">
+                                     <label for="editUsername" class="form-label">Kullanıcı Adı</label>
+                                     <input type="text" class="form-control" id="editUsername" name="username" value="${user.username}" required>
+                                 </div>
+                                 <div class="mb-3">
+                                     <label for="editEmail" class="form-label">Email</label>
+                                     <input type="email" class="form-control" id="editEmail" name="email" value="${user.email || ''}">
+                                 </div>
+                                  <div class="mb-3">
+                                     <label for="editPassword" class="form-label">Yeni Şifre (Değiştirmek istemiyorsanız boş bırakın)</label>
+                                     <input type="password" class="form-control" id="editPassword" name="password">
+                                 </div>
+                                 <!-- Admin yetkilendirmesi eklenince rol seçimi eklenebilir -->
+                                 <button type="submit" class="btn btn-primary">Güncelle</button>
+                             </form>
+                         `;
+                         const newEditUserForm = document.getElementById('editUserForm');
+                         newEditUserForm.addEventListener('submit', handleEditUserSubmit);
+
+                    } else {
+                         // If form exists, just update values and data-user-id
+                         editUserForm.dataset.userId = user.id;
+                         editUserForm.querySelector('#editUsername').value = user.username;
+                         editUserForm.querySelector('#editEmail').value = user.email || '';
+                         editUserForm.querySelector('#editPassword').value = ''; // Clear password field
+                    }
+
+                    editUserModal.show(); // Show the modal
+
+                } else {
+                    console.error('Kullanıcı bilgileri çekilemedi:', data.message);
+                    alert('Kullanıcı bilgileri çekilirken bir hata oluştu: ' + data.message);
+                }
+
+            } catch (error) {
+                console.error('Kullanıcı bilgileri çekerken ağ hatası:', error);
+                alert('Kullanıcı bilgileri çekilirken bir hata oluştu.');
+            }
+        }
+
+        // Function to handle submission of Edit User form
+        async function handleEditUserSubmit(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const userId = form.dataset.userId;
+            const username = form.username.value;
+            const email = form.email.value;
+            const password = form.password.value; // New password (might be empty)
+
+            // Basic validation (add more as needed)
+            if (!username) {
+                alert('Kullanıcı adı gerekli.');
+                return;
+            }
+
+             const token = localStorage.getItem('token');
+             if (!token) {
+                 console.error("Yetkilendirme token'ı bulunamadı.");
+                 alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                 window.location.href = '../login.html';
+                 return;
+             }
+
+            const updatedUserData = { username, email };
+            if (password) { // Only include password if it's not empty
+                updatedUserData.password = password;
+            }
+
+            try {
+                const response = await fetch(`/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(updatedUserData)
+                });
+
+                 if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Bu işlemi yapmak için yetkiniz yok veya oturumunuz sona ermiş.');
+                        window.location.href = '../login.html';
+                         return;
+                    } else {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Kullanıcı başarıyla güncellendi!');
+                    // Close the modal
+                    const editUserModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
+                    editUserModal.hide();
+                    fetchUsers(); // Refresh the user list
+                } else {
+                    console.error('Kullanıcı güncelleme hatası:', data.message);
+                    alert('Kullanıcı güncellenirken bir hata oluştu: ' + data.message);
+                }
+
+            } catch (error) {
+                console.error('Kullanıcı güncelleme sırasında ağ hatası:', error);
+                alert('Kullanıcı güncellenirken bir hata oluştu.');
+            }
+        }
+
+         // TODO: Implement Edit functionality (fetch user data, populate modal, fetch PUT request)
+
+    </script>
+</body>
+</html> 

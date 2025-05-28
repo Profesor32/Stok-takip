@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler Yönetimi - StokTakip Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard.html">StokTakip Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAdmin">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/dashboard.html"><i class="fas fa-cogs me-2"></i> Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/products.html"><i class="fas fa-boxes me-2"></i> Ürünler</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/addProduct.html"><i class="fas fa-plus-square me-2"></i> Ürün Ekle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/frontend/admin/categories.html"><i class="fas fa-tags me-2"></i> Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/users.html"><i class="fas fa-users-cog me-2"></i> Kullanıcılar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/sales.html"><i class="fas fa-chart-bar me-2"></i> Satışlar</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                     <ul class="navbar-nav">
+                         <li class="nav-item">
+                             <a class="nav-link" href="#" onclick="logout()">Çıkış Yap</a>
+                         </li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Categories Management Section -->
+    <div class="container my-5">
+        <h1>Kategoriler Yönetimi</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Yeni Kategori Ekle</h5>
+                <form id="addCategoryForm" class="row g-3">
+                    <div class="col-md-8">
+                        <label for="categoryName" class="form-label">Kategori Adı</label>
+                        <input type="text" class="form-control" id="categoryName" required>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Ekle</button>
+                    </div>
+                </form>
+
+                <h5 class="card-title mt-4">Mevcut Kategoriler</h5>
+                <ul id="categoryList" class="list-group">
+                    <!-- Kategoriler buraya yüklenecek -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+             <div class="row mb-3">
+                <div class="col-12">
+                    <h5>StokTakip Hakkında</h5>
+                    <p>StokTakip, işletmelerin envanterlerini etkili bir şekilde yönetmelerini sağlayan kapsamlı bir web platformudur. Ürün takibi, stok giriş-çıkışları, satış raporları, tedarikçi yönetimi ve barkod entegrasyonu gibi ileri düzey özelliklerle iş süreçlerinizi baştan sona optimize edin. Küçük işletmelerden büyük depolara kadar her ölçekteki işletmenin ihtiyaçlarına uygun çözümler sunarız. Stoklarınızı anlık olarak takip ederek maliyetleri düşürün, verimliliği artırın ve müşteri memnuniyetini en üst düzeye çıkarın.</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                 <div class="col-md-4">
+                    <h5>Site Bağlantıları</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="/frontend/products.html" class="text-light">Ürünler</a></li>
+                        <li><a href="/frontend/about.html" class="text-light">Hakkımızda</a></li>
+                        <li><a href="/frontend/services.html" class="text-light">Hizmetlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Kurumsal Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                         <li><a href="/frontend/projects.html" class="text-light">Projelerimiz</a></li>
+                        <li><a href="/frontend/contact.html" class="text-light">İletişim</a></li>
+                        <li><a href="/frontend/login.html" class="text-light">Giriş Yap</a></li>
+                        <li><a href="/frontend/register.html" class="text-light">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                 <div class="col-md-4">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@stoktakip.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (537) 674 71 69</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                     <p class="mt-3 text-muted">Bizimle iletişime geçmekten çekinmeyin.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 StokTakip. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (!user.id || user.role !== 'admin') {
+                window.location.href = '/frontend/login.html'; // veya yetkisiz sayfa
+                return;
+            }
+            updateCartCount(); // Admin panelinde sepet olmasa da fonksiyonu çağırıyoruz
+            updateUserMenu(); // Admin menüsünü güncelle
+            loadCategories();
+        });
+
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/categories', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    const categoryList = document.getElementById('categoryList');
+                    categoryList.innerHTML = ''; // Listeyi temizle
+                    data.data.forEach(category => {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                        listItem.textContent = category.name;
+                        // İsteğe bağlı: Silme butonu ekle
+                        // const deleteButton = document.createElement('button');
+                        // deleteButton.className = 'btn btn-danger btn-sm';
+                        // deleteButton.textContent = 'Sil';
+                        // deleteButton.onclick = () => deleteCategory(category.id);
+                        // listItem.appendChild(deleteButton);
+                        categoryList.appendChild(listItem);
+                    });
+                } else {
+                     showToast(data.message || 'Kategoriler yüklenirken bir hata oluştu', 'danger');
+                }
+            } catch (error) {
+                console.error('Kategori yükleme hatası:', error);
+                 showToast('Kategoriler yüklenirken bir hata oluştu', 'danger');
+            }
+        }
+
+        document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const categoryNameInput = document.getElementById('categoryName');
+            const categoryName = categoryNameInput.value.trim();
+
+            if (!categoryName) {
+                showToast('Lütfen kategori adını girin', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/categories', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ name: categoryName })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Kategori başarıyla eklendi', 'success');
+                    categoryNameInput.value = ''; // Inputu temizle
+                    loadCategories(); // Listeyi güncelle
+                } else {
+                    showToast(data.message || 'Kategori eklenirken bir hata oluştu', 'danger');
+                }
+            } catch (error) {
+                console.error('Kategori ekleme hatası:', error);
+                 showToast('Kategori eklenirken bir hata oluştu', 'danger');
+            }
+        });
+
+        // İsteğe bağlı: Kategori silme fonksiyonu
+        // async function deleteCategory(categoryId) {
+        //     try {
+        //         const response = await fetch(`/api/categories/${categoryId}`, {
+        //             method: 'DELETE',
+        //             headers: {
+        //                 'Authorization': `Bearer ${localStorage.getItem('token')}`
+        //             }
+        //         });
+        //         const data = await response.json();
+
+        //         if (data.success) {
+        //             showToast('Kategori başarıyla silindi', 'success');
+        //             loadCategories(); // Listeyi güncelle
+        //         } else {
+        //             showToast(data.message || 'Kategori silinirken bir hata oluştu', 'danger');
+        //         }
+        //     } catch (error) {
+        //         console.error('Kategori silme hatası:', error);
+        //         showToast('Kategori silinirken bir hata oluştu', 'danger');
+        //     }
+        // }
+
+    </script>
+</body>
+</html> 

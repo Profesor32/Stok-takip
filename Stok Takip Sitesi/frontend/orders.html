@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siparişlerim - StokTakip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">StokTakip</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-2"></i> Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/products.html"><i class="fas fa-boxes me-2"></i> Ürünler</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/about.html"><i class="fas fa-info-circle me-2"></i> Hakkımızda</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/services.html"><i class="fas fa-concierge-bell me-2"></i> Hizmetlerimiz</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/projects.html"><i class="fas fa-project-diagram me-2"></i> Projelerimiz</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/contact.html"><i class="fas fa-envelope me-2"></i> İletişim</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="/frontend/cart.html" class="btn btn-outline-light me-2 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" id="userDropdown">
+                            <!-- Kullanıcı menüsü JS ile doldurulacak -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orders Section -->
+    <div class="orders-section py-5">
+        <div class="container">
+            <h2 class="mb-4">Siparişlerim</h2>
+            <div class="card">
+                <div class="card-body" id="ordersContainer">
+                    <!-- Sipariş listesi JavaScript ile buraya eklenecek -->
+                    <p>Siparişler yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>StokTakip</h5>
+                    <p>Ürünlerinizi kolayca yönetin, stok durumlarını takip edin.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Hızlı Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="/frontend/products.html" class="text-light">Ürünler</a></li>
+                         <li><a href="/frontend/about.html" class="text-light">Hakkımızda</a></li>
+                        <li><a href="/frontend/login.html" class="text-light">Giriş Yap</a></li>
+                        <li><a href="/frontend/register.html" class="text-light">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@stoktakip.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (537) 674 71 69</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 StokTakip. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+     <script>
+        // Siparişleri getir ve görüntüle (Placeholder)
+        async function fetchAndDisplayOrders() {
+            const ordersContainer = document.getElementById('ordersContainer');
+            if (!ordersContainer) return; 
+
+             if (!checkAuth()) { // Yetkilendirme kontrolü
+                window.location.href = '/frontend/login.html';
+                return;
+            }
+
+            // API'den siparişleri çekme mantığı buraya eklenecek
+            ordersContainer.innerHTML = '<p>Sipariş listesi henüz mevcut değil.</p>'; // Geçici mesaj
+        }
+
+        // Sayfa yüklendiğinde siparişleri getir
+         document.addEventListener('DOMContentLoaded', () => {
+             // updateUserMenu() ve updateCartCount() script.js içinde çağrılıyor
+            fetchAndDisplayOrders();
+         });
+    </script>
+</body>
+</html> 

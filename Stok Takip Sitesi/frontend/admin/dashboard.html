@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli - StokTakip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/frontend/admin/dashboard.html">StokTakip Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAdmin">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/frontend/admin/dashboard.html"><i class="fas fa-cogs me-2"></i> Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/products.html"><i class="fas fa-boxes me-2"></i> Ürünler</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/addProduct.html"><i class="fas fa-plus-square me-2"></i> Ürün Ekle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/categories.html"><i class="fas fa-tags me-2"></i> Kategoriler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/users.html"><i class="fas fa-users-cog me-2"></i> Kullanıcılar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/admin/sales.html"><i class="fas fa-chart-bar me-2"></i> Satışlar</a>
+                    </li>
+                </ul>
+                 <div class="d-flex">
+                     <ul class="navbar-nav">
+                         <li class="nav-item">
+                             <a class="nav-link" href="#" onclick="logout()">Çıkış Yap</a>
+                         </li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard Section -->
+    <div class="container my-5">
+        <h1 class="mb-4">Yönetici Paneli</h1>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-boxes fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Ürünler</h5>
+                        <p class="card-text">Ürünleri yönetin, yeni ürün ekleyin.</p>
+                        <a href="/frontend/admin/products.html" class="btn btn-primary">Git</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-tags fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Kategoriler</h5>
+                        <p class="card-text">Ürün kategorilerini yönetin.</p>
+                        <a href="/frontend/admin/categories.html" class="btn btn-success">Git</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-users-cog fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Kullanıcılar</h5>
+                        <p class="card-text">Sistem kullanıcılarını yönetin.</p>
+                        <a href="/frontend/admin/users.html" class="btn btn-info">Git</a>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-chart-bar fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">Satışlar</h5>
+                        <p class="card-text">Satışları ve istatistikleri görüntüleyin.</p>
+                        <a href="/frontend/admin/sales.html" class="btn btn-warning">Git</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>StokTakip</h5>
+                    <p>StokTakip, işletmelerin envanterlerini etkili bir şekilde yönetmelerini sağlayan kapsamlı bir web platformudur. Ürün takibi, stok giriş-çıkışları, satış raporları ve barkod entegrasyonu gibi özelliklerle iş süreçlerinizi optimize edin.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Hızlı Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="/frontend/products.html" class="text-light">Ürünler</a></li>
+                         <li><a href="/frontend/services.html" class="text-light">Hizmetlerimiz</a></li>
+                         <li><a href="/frontend/projects.html" class="text-light">Projelerimiz</a></li>
+                        <li><a href="/frontend/about.html" class="text-light">Hakkımızda</a></li>
+                        <li><a href="/frontend/contact.html" class="text-light">İletişim</a></li>
+                        <li><a href="/frontend/login.html" class="text-light">Giriş Yap</a></li>
+                        <li><a href="/frontend/register.html" class="text-light">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@stoktakip.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (537) 674 71 69</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 StokTakip. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+     <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Admin paneli olduğu için sadece admin kullanıcılar görebilmeli
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (!user.id || user.role !== 'admin') {
+                window.location.href = '/frontend/login.html'; // veya yetkisiz sayfa
+                return;
+            }
+            updateCartCount(); // Admin panelinde sepet olmasa da fonksiyonu çağırıyoruz
+            updateUserMenu(); // Admin menüsünü güncelle
+        });
+
+        // Admin menüsünü güncelle (Bu admin layoutuna özel)
+        function updateUserMenu() {
+             const user = JSON.parse(localStorage.getItem('user') || '{}');
+             // Admin menüsünde kullanıcı adı gösterme vb. gerekirse buraya eklenebilir
+             console.log('Admin girişi yapan kullanıcı:', user.username);
+         }
+    </script>
+</body>
+</html> 

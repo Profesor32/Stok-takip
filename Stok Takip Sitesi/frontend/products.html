@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünler - StokTakip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">StokTakip</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-2"></i> Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/frontend/products.html"><i class="fas fa-boxes me-2"></i> Ürünler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/services.html"><i class="fas fa-concierge-bell me-2"></i> Hizmetlerimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/projects.html"><i class="fas fa-project-diagram me-2"></i> Projelerimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/about.html"><i class="fas fa-info-circle me-2"></i> Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/contact.html"><i class="fas fa-envelope me-2"></i> İletişim</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="/frontend/cart.html" class="btn btn-outline-light me-2 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                        <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                            </button>
+                        <ul class="dropdown-menu dropdown-menu-end" id="userDropdown">
+                            <li><a class="dropdown-item" href="/frontend/login.html">Giriş Yap</a></li>
+                            <li><a class="dropdown-item" href="/frontend/register.html">Kayıt Ol</a></li>
+                            </ul>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </nav>
+
+    <!-- Products Section -->
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1>Ürünler</h1>
+            </div>
+            <div class="col-md-4 text-end">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
+                    <i class="fas fa-barcode me-2"></i>Barkod Oku
+                        </button>
+                    </div>
+                </div>
+
+        <!-- Filtreler -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <input type="text" id="productSearch" class="form-control" placeholder="Ürün Ara...">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <select id="categoryFilter" class="form-select">
+                                    <option value="">Tüm Kategoriler</option>
+                            <option value="elektronik">Elektronik</option>
+                            <option value="giyim">Giyim</option>
+                            <option value="gida">Gıda</option>
+                            <option value="mobilya">Mobilya</option>
+                                </select>
+                            </div>
+                    <div class="col-md-3 mb-3">
+                        <select id="sortFilter" class="form-select">
+                                    <option value="name_asc">İsim (A-Z)</option>
+                                    <option value="name_desc">İsim (Z-A)</option>
+                                    <option value="price_asc">Fiyat (Düşük-Yüksek)</option>
+                                    <option value="price_desc">Fiyat (Yüksek-Düşük)</option>
+                                </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <button id="filterBtn" class="btn btn-primary w-100">Filtrele</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ürün Listesi -->
+        <div class="row" id="productsContainer">
+            <!-- Ürünler JavaScript ile buraya eklenecek -->
+        </div>
+    </div>
+
+    <!-- Barkod Okuyucu Modal -->
+    <div class="modal fade" id="barcodeScannerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Barkod Okuyucu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <video id="barcodeScanner" class="w-100"></video>
+                            </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="barcodeInput" class="form-control" placeholder="Barkod numarasını girin">
+                        <button class="btn btn-primary" onclick="searchByBarcode()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row mb-3">
+                 <div class="col-md-4">
+                    <h5>Site Bağlantıları</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="/frontend/products.html" class="text-light">Ürünler</a></li>
+                        <li><a href="/frontend/about.html" class="text-light">Hakkımızda</a></li>
+                        <li><a href="/frontend/services.html" class="text-light">Hizmetlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Kurumsal Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                         <li><a href="/frontend/projects.html" class="text-light">Projelerimiz</a></li>
+                        <li><a href="/frontend/contact.html" class="text-light">İletişim</a></li>
+                        <li><a href="/frontend/login.html" class="text-light">Giriş Yap</a></li>
+                        <li><a href="/frontend/register.html" class="text-light">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                 <div class="col-md-4">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@stoktakip.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (537) 674 71 69</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <h5>StokTakip Hakkında</h5>
+                    <p>StokTakip, işletmelerin envanterlerini etkili bir şekilde yönetmelerini sağlayan kapsamlı bir web platformudur. Ürün takibi, stok giriş-çıkışları, satış raporları, tedarikçi yönetimi ve barkod entegrasyonu gibi ileri düzey özelliklerle iş süreçlerinizi baştan sona optimize edin. Küçük işletmelerden büyük depolara kadar her ölçekteki işletmenin ihtiyaçlarına uygun çözümler sunarız. Stoklarınızı anlık olarak takip ederek maliyetleri düşürün, verimliliği artırın ve müşteri memnuniyetini en üst düzeye çıkarın.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        let html5QrcodeScanner = null;
+        let allProducts = [];
+
+        // Ürünleri getir
+        async function fetchAndDisplayProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allProducts = data.data; // Tüm ürünleri sakla
+                    displayProducts(allProducts); // Hepsini görüntüle
+                } else {
+                    showToast(data.message || 'Ürünler yüklenemedi', 'danger');
+                }
+            } catch (error) {
+                console.error('Ürün yükleme hatası:', error);
+                showToast('Ürünler yüklenirken bir hata oluştu', 'danger');
+            }
+        }
+
+        // Ürünleri görüntüle (filtrelenmiş listeyi alır)
+        function displayProducts(products) {
+            const productsContainer = document.getElementById('productsContainer');
+            if (!productsContainer) return;
+
+            if (products.length === 0) {
+                productsContainer.innerHTML = '<div class="col-12 text-center"><p>Ürün bulunamadı.</p></div>';
+                return;
+            }
+
+            productsContainer.innerHTML = products.map(product => `
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="${product.image_url || '../images/placeholder.jpg'}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.description || ''}</p>
+                            <p class="card-text">
+                                <small class="text-muted">Stok: ${product.stock}</small>
+                            </p>
+                            <p class="card-text">
+                                <strong>${parseFloat(product.price).toFixed(2)} TL</strong>
+                            </p>
+                            <button class="btn btn-primary" onclick="addToCart(${product.id})" ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 ? 'Stokta Yok' : 'Sepete Ekle'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Barkod okuyucu modalı açıldığında
+        document.getElementById('barcodeScannerModal').addEventListener('show.bs.modal', function () {
+            if (html5QrcodeScanner === null) {
+                html5QrcodeScanner = new Html5QrcodeScanner(
+                    "barcodeScanner",
+                    { fps: 10, qrbox: 250 }
+                );
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            }
+        });
+
+        // Barkod okuyucu modalı kapandığında
+        document.getElementById('barcodeScannerModal').addEventListener('hidden.bs.modal', function () {
+            if (html5QrcodeScanner !== null) {
+                html5QrcodeScanner.clear();
+                html5QrcodeScanner = null;
+            }
+        });
+
+        // Barkod okuma başarılı olduğunda
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('barcodeInput').value = decodedText;
+            searchByBarcode();
+        }
+
+        // Barkod okuma başarısız olduğunda
+        function onScanFailure(error) {
+            console.warn(`Barkod okuma hatası: ${error}`);
+        }
+
+        // Barkod ile ürün arama
+        async function searchByBarcode() {
+            const barcode = document.getElementById('barcodeInput').value;
+            if (!barcode) return;
+
+            try {
+                const response = await fetch(`/api/products/barcode/${barcode}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('barcodeScannerModal'));
+                    modal.hide();
+                    window.location.href = `/frontend/product-detail.html?id=${data.data.id}`;
+                } else {
+                    showToast('Ürün bulunamadı', 'error');
+                }
+            } catch (error) {
+                console.error('Barkod arama hatası:', error);
+                showToast('Ürün arama sırasında bir hata oluştu', 'error');
+            }
+        }
+
+        // Filtreleme işlemi
+        document.getElementById('filterBtn').addEventListener('click', () => {
+            const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const sortBy = document.getElementById('sortFilter').value;
+
+            let filteredProducts = [...allProducts];
+
+            // Arama filtresi
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    (product.description && product.description.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            // Kategori filtresi
+            if (category) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.category === category
+                );
+            }
+
+            // Sıralama
+            filteredProducts.sort((a, b) => {
+                switch (sortBy) {
+                    case 'name_asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name_desc':
+                        return b.name.localeCompare(a.name);
+                    case 'price_asc':
+                        return a.price - b.price;
+                    case 'price_desc':
+                        return b.price - a.price;
+                    default:
+                        return 0;
+                }
+            });
+
+            displayProducts(filteredProducts);
+        });
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            updateUserMenu();
+            fetchAndDisplayProducts();
+        });
+
+        // Kullanıcı menüsünü güncelle (Geçici olarak buraya eklendi, script.js'e taşınacak)
+        function updateUserMenu() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (user.id) {
+                userDropdown.innerHTML = `
+                    <li><a class="dropdown-item" href="/frontend/profile.html">Profilim</a></li>
+                    <li><a class="dropdown-item" href="/frontend/orders.html">Siparişlerim</a></li>
+                    ${user.isAdmin ? '<li><a class="dropdown-item" href="/frontend/admin/users.html">Admin Panel</a></li>' : ''}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()">Çıkış Yap</a></li>
+                `;
+            } else {
+                userDropdown.innerHTML = `
+                    <li><a class="dropdown-item" href="/frontend/login.html">Giriş Yap</a></li>
+                    <li><a class="dropdown-item" href="/frontend/register.html">Kayıt Ol</a></li>
+                `;
+            }
+        }
+         // logout fonksiyonu script.js içinde
+    </script>
+</body>
+</html> 

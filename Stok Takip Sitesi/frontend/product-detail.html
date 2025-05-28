@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı - StokTakip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">StokTakip</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-2"></i> Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/products.html"><i class="fas fa-boxes me-2"></i> Ürünler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/about.html"><i class="fas fa-info-circle me-2"></i> Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/services.html"><i class="fas fa-concierge-bell me-2"></i> Hizmetlerimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/projects.html"><i class="fas fa-project-diagram me-2"></i> Projelerimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/frontend/contact.html"><i class="fas fa-envelope me-2"></i> İletişim</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="/frontend/cart.html" class="btn btn-outline-light me-2 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" id="userDropdown">
+                            <li><a class="dropdown-item" href="/frontend/login.html">Giriş Yap</a></li>
+                            <li><a class="dropdown-item" href="/frontend/register.html">Kayıt Ol</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Ürün Bilgileri -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img id="productImage" src="" alt="Ürün Görseli" class="img-fluid rounded mb-3">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 id="productName" class="mb-3"></h2>
+                                <p id="productDescription" class="text-muted mb-3"></p>
+                                <div class="mb-3">
+                                    <h4 class="text-primary" id="productPrice"></h4>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="badge bg-success" id="stockStatus"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Adet:</label>
+                                    <div class="input-group" style="max-width: 150px;">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(-1)">-</button>
+                                        <input type="number" class="form-control text-center" id="quantity" value="1" min="1">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="updateQuantity(1)">+</button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="addToCart()">
+                                    <i class="fas fa-cart-plus me-2"></i>Sepete Ekle
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stok Hareketleri -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Stok Hareketleri</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tarih</th>
+                                        <th>İşlem</th>
+                                        <th>Miktar</th>
+                                        <th>Kalan Stok</th>
+                                        <th>Açıklama</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stockMovements">
+                                    <!-- Stok hareketleri JavaScript ile buraya eklenecek -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yan Bilgiler -->
+            <div class="col-md-4">
+                <!-- Barkod Bilgisi -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Barkod Bilgisi</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img id="barcodeImage" src="" alt="Barkod" class="img-fluid mb-2">
+                            <p id="barcodeNumber" class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Satış İstatistikleri -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Satış İstatistikleri</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6>Son 30 Gün</h6>
+                            <div class="d-flex justify-content-between">
+                                <span>Toplam Satış:</span>
+                                <span id="lastMonthSales">0</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Ortalama Günlük:</span>
+                                <span id="averageDailySales">0</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6>Stok Durumu</h6>
+                            <div class="progress">
+                                <div id="stockProgress" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted" id="stockInfo"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benzer Ürünler -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Benzer Ürünler</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="similarProducts">
+                            <!-- Benzer ürünler JavaScript ile buraya eklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>StokTakip</h5>
+                    <p>StokTakip, işletmelerin envanterlerini etkili bir şekilde yönetmelerini sağlayan kapsamlı bir web platformudur. Ürün takibi, stok giriş-çıkışları, satış raporları ve barkod entegrasyonu gibi özelliklerle iş süreçlerinizi optimize edin.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Site Bağlantıları</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Ana Sayfa</a></li>
+                        <li><a href="/frontend/products.html" class="text-light">Ürünler</a></li>
+                        <li><a href="/frontend/about.html" class="text-light">Hakkımızda</a></li>
+                        <li><a href="/frontend/services.html" class="text-light">Hizmetlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Kurumsal Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/frontend/projects.html" class="text-light">Projelerimiz</a></li>
+                        <li><a href="/frontend/contact.html" class="text-light">İletişim</a></li>
+                        <li><a href="/frontend/login.html" class="text-light">Giriş Yap</a></li>
+                        <li><a href="/frontend/register.html" class="text-light">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@stoktakip.com</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (537) 674 71 69</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                    </ul>
+                    <p class="mt-3 text-muted">Bizimle iletişime geçmekten çekinmeyin.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 StokTakip. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        let currentProduct = null;
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            updateUserMenu();
+            loadProductDetails();
+        });
+
+        // Ürün detaylarını yükle
+        async function loadProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                showToast('Ürün bulunamadı', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/products/${productId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    currentProduct = data.data;
+                    displayProductDetails();
+                    loadStockMovements();
+                    loadSalesStatistics();
+                    loadSimilarProducts();
+                } else {
+                    showToast('Ürün yüklenirken bir hata oluştu', 'error');
+                }
+            } catch (error) {
+                console.error('Ürün detay yükleme hatası:', error);
+                showToast('Ürün detayları yüklenirken bir hata oluştu', 'error');
+            }
+        }
+
+        // Ürün detaylarını göster
+        function displayProductDetails() {
+            document.getElementById('productName').textContent = currentProduct.name;
+            document.getElementById('productDescription').textContent = currentProduct.description;
+            document.getElementById('productPrice').textContent = `${currentProduct.price.toFixed(2)} TL`;
+            document.getElementById('productImage').src = currentProduct.image_url;
+            document.getElementById('barcodeNumber').textContent = currentProduct.barcode;
+            document.getElementById('barcodeImage').src = `/api/products/barcode-image/${currentProduct.barcode}`;
+
+            const stockStatus = document.getElementById('stockStatus');
+            if (currentProduct.stock > 0) {
+                stockStatus.textContent = `Stokta ${currentProduct.stock} adet var`;
+                stockStatus.className = 'badge bg-success';
+            } else {
+                stockStatus.textContent = 'Stokta yok';
+                stockStatus.className = 'badge bg-danger';
+            }
+        }
+
+        // Stok hareketlerini yükle
+        async function loadStockMovements() {
+            try {
+                const response = await fetch(`/api/products/${currentProduct.id}/stock-movements`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const movementsHtml = data.data.map(movement => `
+                        <tr>
+                            <td>${new Date(movement.date).toLocaleDateString()}</td>
+                            <td>
+                                <span class="badge ${movement.type === 'in' ? 'bg-success' : 'bg-danger'}">
+                                    ${movement.type === 'in' ? 'Giriş' : 'Çıkış'}
+                                </span>
+                            </td>
+                            <td>${movement.quantity}</td>
+                            <td>${movement.remaining_stock}</td>
+                            <td>${movement.description}</td>
+                        </tr>
+                    `).join('');
+
+                    document.getElementById('stockMovements').innerHTML = movementsHtml;
+                }
+            } catch (error) {
+                console.error('Stok hareketleri yükleme hatası:', error);
+            }
+        }
+
+        // Satış istatistiklerini yükle
+        async function loadSalesStatistics() {
+            try {
+                const response = await fetch(`/api/products/${currentProduct.id}/sales-statistics`);
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('lastMonthSales').textContent = data.data.last_month_sales;
+                    document.getElementById('averageDailySales').textContent = data.data.average_daily_sales;
+
+                    const stockPercentage = (currentProduct.stock / currentProduct.max_stock) * 100;
+                    const stockProgress = document.getElementById('stockProgress');
+                    stockProgress.style.width = `${stockPercentage}%`;
+                    stockProgress.className = `progress-bar ${stockPercentage < 20 ? 'bg-danger' : stockPercentage < 50 ? 'bg-warning' : 'bg-success'}`;
+
+                    document.getElementById('stockInfo').textContent = 
+                        `Mevcut stok: ${currentProduct.stock} / ${currentProduct.max_stock}`;
+                }
+            } catch (error) {
+                console.error('Satış istatistikleri yükleme hatası:', error);
+            }
+        }
+
+        // Benzer ürünleri yükle
+        async function loadSimilarProducts() {
+            try {
+                const response = await fetch(`/api/products/${currentProduct.id}/similar`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const similarProductsHtml = data.data.map(product => `
+                        <div class="card mb-2">
+                            <div class="card-body p-2">
+                                <div class="d-flex align-items-center">
+                                    <img src="${product.image_url}" alt="${product.name}" class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div class="ms-2">
+                                        <h6 class="mb-0">${product.name}</h6>
+                                        <p class="mb-0 text-primary">${product.price.toFixed(2)} TL</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    document.getElementById('similarProducts').innerHTML = similarProductsHtml;
+                }
+            } catch (error) {
+                console.error('Benzer ürünler yükleme hatası:', error);
+            }
+        }
+
+        // Miktar güncelleme
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            const newQuantity = parseInt(quantityInput.value) + change;
+            
+            if (newQuantity >= 1 && newQuantity <= currentProduct.stock) {
+                quantityInput.value = newQuantity;
+            }
+        }
+
+        // Sepete ekle
+        function addToCart() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            
+            if (quantity > currentProduct.stock) {
+                showToast('Yeterli stok bulunmuyor', 'error');
+                return;
+            }
+
+            addToCart(currentProduct, quantity);
+            showToast('Ürün sepete eklendi', 'success');
+        }
+    </script>
+</body>
+</html> 

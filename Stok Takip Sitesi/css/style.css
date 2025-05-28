@@ -1,0 +1,937 @@
+/* General Styles */
+:root {
+    --primary-color: #ffffff; /* Logo/İkon rengi - Beyaz */
+    --secondary-color: #cccccc; /* İkincil vurgu/fiyat rengi - Açık Gri */
+    --success-color: #00c853; /* Yeşil (Durum renkleri aynı kalabilir) */
+    --danger-color: #ff1744; /* Kırmızı (Durum renkleri aynı kalabilir) */
+    --warning-color: #ffea00; /* Sarı (Durum renkleri aynı kalabilir) */
+    --info-color: #2979ff; /* Mavi (Durum renkleri aynı kalabilir) */
+    --light-color: #ffffff; /* Tam Beyaz */
+    --dark-color: #000000; /* Tam Siyah */
+    --gray-color: #333333; /* Koyu Gri (kenarlık vb.) */
+    --background-color: #000000; /* Arka plan tam siyah */
+    --surface-color: #1a1a1a; /* Koyu yüzey rengi (kartlar, modallar vb.) */
+    --text-color: #ffffff; /* Tam Beyaz (genel metin) */
+    --text-color-secondary: #cccccc; /* Daha soluk metin rengi */
+    --border-color: #333333; /* Koyu gri kenarlık */
+    --navbar-color: #000000; /* Navbar arka planı tam siyah */
+    --navbar-text-color: #ffffff; /* Navbar metin rengi beyaz */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 56px; /* Sabit navbar yüksekliği kadar boşluk */
+    background-color: var(--background-color) !important;
+    color: var(--text-color);
+}
+
+/* Layout */
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: var(--dark-color); /* Koyu gri sidebar */
+    color: var(--text-color); /* Açık metin */
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    border-right: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+.sidebar-nav {
+    padding: 1rem 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-color); /* Açık link metni */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active {
+    color: var(--primary-color); /* Vurgulu renk */
+    background-color: var(--surface-color); /* Yüzey rengi arka plan */
+}
+
+.sidebar-nav .nav-link i {
+    width: 20px;
+    margin-right: 0.75rem;
+    color: var(--primary-color); /* İkon rengi beyaz */
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    transition: all 0.3s ease;
+    background-color: var(--background-color); /* Ana içerik arka planı */
+    color: var(--text-color); /* Ana içerik metin rengi */
+}
+
+.top-bar {
+    background-color: var(--surface-color); /* Koyu yüzey rengi top bar */
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color); /* Kenarlık rengi */
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    color: var(--text-color); /* Top bar metin rengi açık */
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color); /* Açık ikon rengi */
+    font-size: 1.25rem;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.page-title {
+    font-size: 1.25rem;
+    margin: 0;
+    flex: 1;
+    color: var(--light-color); /* Sayfa başlığı rengi beyaz */
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--border-color); /* Kenarlık rengi */
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: var(--surface-color); /* Kart arka planı yüzey rengi */
+    color: var(--text-color); /* Kart metin rengi açık */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Gölgeyi belirginleştir */
+}
+
+.card-header {
+    background-color: var(--dark-color); /* Kart başlığı arka planı */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık rengi */
+    padding: 1rem 1.25rem;
+    color: var(--light-color); /* Kart başlığı metin rengi beyaz */
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    background-color: var(--dark-color); /* Form kontrol arka planı daha koyu */
+    color: var(--text-color); /* Form kontrol metin rengi */
+    border: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color); /* Odaklanma kenarlık rengi */
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25); /* Odaklanma gölgesi (beyaz renge göre ayarlandı) */
+    background-color: var(--dark-color); /* Odaklanınca arka plan değişmesin */
+    color: var(--text-color); /* Odaklanınca metin rengi değişmesin */
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-color); /* Form etiketi rengi açık */
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: opacity 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background-color: var(--primary-color); /* Birincil düğme (Beyaz) */
+    border-color: var(--primary-color); /* Kenarlık rengi */
+    color: var(--dark-color); /* Koyu metin (primary butonda - Siyah) */
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-color); /* Hover'da arka plan siyah */
+    border-color: var(--dark-color); /* Hover'da kenarlık siyah */
+    color: var(--light-color) !important; /* Hover'da metin rengi beyaz */
+}
+
+.btn-outline-light {
+    color: var(--light-color); /* Açık renkli metin */
+    border-color: var(--light-color); /* Açık renkli kenarlık */
+}
+
+.btn-outline-light:hover {
+    color: var(--dark-color) !important; /* Hover'da koyu metin */
+    background-color: var(--light-color); /* Hover'da açık arka plan */
+    border-color: var(--light-color); /* Hover'da açık kenarlık */
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+    color: var(--text-color); /* Tablo metin rengi açık */
+}
+
+.table th {
+    font-weight: 600;
+    background-color: var(--dark-color); /* Tablo başlığı arka planı koyu */
+    color: var(--light-color); /* Tablo başlığı metin rengi beyaz */
+    border-bottom: 2px solid var(--border-color); /* Başlık alt kenarlık */
+}
+
+.table td {
+    vertical-align: middle;
+    border-top: 1px solid var(--border-color); /* Hücre üst kenarlık */
+}
+
+/* Badges */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* Toast */
+.toast {
+    background-color: var(--surface-color); /* Toast arka planı yüzey rengi */
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    color: var(--text-color); /* Metin rengi açık */
+}
+
+.toast.bg-success {
+    background-color: var(--success-color) !important; /* Başarı rengi */
+    color: white !important;
+}
+
+.toast.bg-danger {
+    background-color: var(--danger-color) !important; /* Hata rengi */
+    color: white !important;
+}
+
+.toast.bg-info {
+    background-color: var(--info-color) !important; /* Bilgi rengi */
+    color: white !important;
+}
+
+.toast-header {
+    background-color: var(--surface-color); /* Başlık arka planı yüzey rengi */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .main-content.sidebar-open {
+        margin-left: 280px;
+    }
+
+    .hero-section {
+        padding: 40px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .features-section,
+    .products-section {
+        padding: 40px 0;
+    }
+}
+
+/* Animations */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color); /* Arka plan rengi ile uyumlu */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-color); /* Gri scrollbar */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6c757d; /* Daha koyu gri hover */
+}
+
+/* Navbar Styles */
+.navbar {
+    position: fixed; /* Navbar'ı ekranın üstüne sabitle */
+    top: 0; /* En üste hizala */
+    width: 100%; /* Genişliği tam yap */
+    z-index: 1030; /* Navbar'ın diğer elementlerin üstünde görünmesini sağla */
+    box-shadow: 0 2px 4px rgba(255,255,255,0.1); /* Açık renk gölge */
+    background-color: var(--navbar-color) !important; /* Tam Siyah navbar */
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: var(--navbar-text-color); /* Beyaz renk marka adı */
+}
+
+.navbar-brand i {
+     color: var(--primary-color); /* Logo ikonu beyaz */
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease;
+    color: var(--navbar-text-color); /* Beyaz renk linkler */
+}
+
+.nav-link:hover {
+    color: var(--secondary-color) !important; /* Hover rengi açık gri */
+    transform: translateY(-2px);
+}
+
+.nav-link i {
+    color: var(--primary-color); /* Link ikonları beyaz */
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 80px 0;
+    background-color: var(--background-color) !important; /* Arka planı tam siyah yap */
+    color: var(--text-color); /* Metin rengini beyaz yap */
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--light-color); /* Başlık rengini beyaz yap */
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--text-color-secondary); /* Alt metin rengini açık gri yap */
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--surface-color); /* Koyu yüzey rengi */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    transition: transform 0.3s ease;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card i {
+    color: var(--primary-color); /* İkon rengi beyaz */
+}
+
+/* Products Section */
+.products {
+    padding: 5rem 0;
+}
+
+.products-section {
+    padding: 80px 0;
+    background-color: var(--background-color) !important; /* Arka planı tam siyah yap */
+}
+
+.products-section h2 {
+    color: var(--light-color); /* Başlık rengini beyaz yap */
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.product-card {
+    background: var(--surface-color); /* Koyu yüzey rengi */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary-color); /* Fiyat rengi açık gri */
+}
+
+/* Cart Styles */
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    color: var(--navbar-text-color); /* Beyaz ikon rengi */
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--danger-color); /* Kırmızı kalabilir */
+    color: white; /* Beyaz metin */
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+    background-color: var(--dark-color); /* Başlık arka planı siyah */
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color); /* Kenarlık */
+    padding: 1rem 1.5rem;
+}
+
+/* Footer Styles */
+footer {
+    background: var(--dark-color); /* Siyah */
+    color: var(--text-color); /* Beyaz metin */
+    padding: 4rem 0;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color); /* Kenarlık */
+}
+
+footer h5 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: var(--text-color-secondary); /* Açık gri metin */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--primary-color) !important; /* Hover rengi beyaz */
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color); /* Arka plan rengi ile uyumlu */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-color); /* Koyu gri scrollbar */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6c757d; /* Daha koyu gri hover */
+}
+
+.features-section .feature-item {
+    padding: 20px;
+    border: 1px solid var(--border-color); /* Kenarlık */
+    border-radius: 5px;
+    margin-bottom: 30px;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Gölge */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.features-section .feature-item i {
+    color: var(--primary-color); /* İkon rengi beyaz */
+    margin-bottom: 15px;
+}
+
+.features-section .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+.products-section .card-title {
+    font-size: 1.25rem;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+.products-section .card-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--secondary-color); /* Fiyat rengi açık gri */
+}
+
+.products-section .card-stock {
+    font-size: 0.9rem;
+    color: var(--text-color-secondary); /* Açık gri renk */
+    margin-bottom: 15px;
+}
+
+.footer {
+    background-color: var(--dark-color); /* Siyah */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.footer a {
+    color: var(--text-color-secondary); /* Açık gri metin */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--primary-color); /* Hover rengi beyaz */
+}
+
+.footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+.footer i {
+    margin-right: 10px;
+    color: var(--primary-color); /* İkon rengi beyaz */
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background-color: var(--background-color); /* Arka planı tam siyah yap */
+}
+
+.features-section .card {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    transition: transform 0.3s ease;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.features-section .card:hover {
+    transform: translateY(-5px);
+}
+
+.features-section .card-body {
+    padding: 2rem;
+}
+
+.features-section .fa-3x {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color); /* İkon rengi beyaz */
+}
+
+/* Products Section */
+.products-section .card {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    transition: transform 0.3s ease;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.products-section .card:hover {
+    transform: translateY(-5px);
+}
+
+.products-section .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.products-section .card-body {
+    padding: 1.5rem;
+}
+
+.products-section .card-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--light-color); /* Beyaz başlık */
+}
+
+.products-section .card-text {
+    color: var(--text-color-secondary); /* Açık gri metin */
+    margin-bottom: 1rem;
+}
+
+/* User Menu Styles */
+.dropdown-menu {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.dropdown-item:hover {
+    background-color: var(--dark-color); /* Siyah hover */
+    color: var(--light-color); /* Beyaz metin */
+}
+
+.dropdown-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid var(--border-color); /* Kenarlık */
+}
+
+/* Cart Badge Styles */
+#cartCount {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    padding: 40px 0;
+}
+
+.profile-card {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.profile-header {
+    background: var(--dark-color); /* Siyah başlık */
+    color: var(--light-color); /* Beyaz metin */
+    padding: 2rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color); /* Beyaz kenarlık */
+    margin-bottom: 1rem;
+}
+
+/* Orders Section Styles */
+.orders-section {
+    padding: 40px 0;
+}
+
+.order-card {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    margin-bottom: 1.5rem;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.order-header {
+    background-color: var(--dark-color); /* Başlık arka planı siyah */
+    padding: 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.order-body {
+    padding: 1.5rem;
+}
+
+.order-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+/* Admin Section Styles */
+.admin-section {
+    padding: 40px 0;
+}
+
+.admin-card {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    margin-bottom: 1.5rem;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.admin-header {
+    background-color: var(--dark-color); /* Başlık arka planı siyah */
+    padding: 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.admin-body {
+    padding: 1.5rem;
+}
+
+.admin-table th {
+    font-weight: 600;
+    background-color: var(--dark-color); /* Başlık arka planı siyah */
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+}
+
+.admin-table td {
+    vertical-align: middle;
+    border-top: 1px solid var(--border-color); /* Kenarlık */
+}
+
+/* Modal Styles */
+.modal-content {
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Belirgin gölge */
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.modal-header {
+    background-color: var(--dark-color); /* Başlık arka planı siyah */
+    border-bottom: 1px solid var(--border-color); /* Kenarlık */
+    color: var(--light-color); /* Başlık metin rengi beyaz */
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color); /* Kenarlık */
+    padding: 1rem 1.5rem;
+}
+
+/* Product Detail Styles */
+.product-detail-section .product-image-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.product-detail-section .product-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* Belirgin gölge */
+}
+
+.product-detail-section .product-info {
+    padding-left: 2rem;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.product-detail-section .product-info h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--light-color); /* Başlık rengi beyaz */
+}
+
+.product-detail-section .product-info h4 {
+    font-size: 1.8rem;
+    color: var(--primary-color); /* Fiyat rengi beyaz */
+    margin-bottom: 1.5rem;
+}
+
+.product-detail-section .product-info .text-muted {
+    font-size: 0.9rem;
+    color: var(--text-color-secondary) !important; /* Açık gri metin */
+}
+
+.product-detail-section .product-info .form-label {
+    font-size: 1.1rem;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.product-detail-section .product-info .form-control {
+    width: 80px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .product-detail-section .product-info {
+        padding-left: 0;
+        margin-top: 1.5rem;
+    }
+}
+
+/* About Section Styles */
+.about-section ul {
+    list-style: none;
+    padding: 0;
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.about-section ul li i {
+    width: 20px;
+    margin-right: 0.5rem;
+    color: var(--primary-color); /* İkon rengi beyaz */
+}
+
+.about-section p {
+    line-height: 1.6;
+    color: var(--text-color-secondary); /* Açık gri metin */
+}
+
+/* Navbar Link Active State */
+.navbar-nav .nav-item .nav-link.active {
+    font-weight: 600;
+    color: var(--primary-color) !important; /* Aktif link rengi beyaz */
+}
+
+/* Cart Item Styling */
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-item .input-group {
+    width: 120px;
+}
+
+.cart-item .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.cart-item .form-control-sm {
+     height: calc(1.8125rem + 2px);
+     padding: 0.25rem 0.5rem;
+     font-size: 0.875rem;
+     border-radius: 0.2rem;
+}
+
+/* Orders List Styling */
+.list-group-item-action {
+    transition: background-color 0.2s ease;
+    background-color: var(--surface-color); /* Koyu yüzey rengi */
+    color: var(--text-color); /* Beyaz metin */
+}
+
+.list-group-item-action:hover {
+    background-color: var(--dark-color); /* Siyah hover */
+}
+
+/* Generic Icon Color */
+i {
+    color: var(--primary-color); /* Tüm ikonlar beyaz */
+} 
